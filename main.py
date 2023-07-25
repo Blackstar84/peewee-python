@@ -54,7 +54,10 @@ if __name__ == '__main__':
     user4 = User.create(username='user4', email='user4@example.com')
     print(user4.id)
     
-    
+    query = User.insert(username='user5', email='user5@example.com')
+    print(query)
+    print(type(query)) # Es del tipo Model Insert
+    query.execute()
     
     
     
