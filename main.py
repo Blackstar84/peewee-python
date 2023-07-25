@@ -26,37 +26,31 @@ if __name__ == '__main__':
         
     User.create_table()
     
-    #Método 1
-    user1 = User(username='user1', email='user1@example.com', active=True)
-
-    """ print(user1)
-    print(user1.email)
-    print(user1.active) """
+    users = [
+        {'username': 'user1', 'email': 'user1@example.com'},
+        {'username': 'user2', 'email': 'user2@example.com'},
+        {'username': 'user3', 'email': 'user3@example.com'},
+        {'username': 'user4', 'email': 'user4@example.com'},
+        {'username': 'user5', 'email': 'user5@example.com'},
+        {'username': 'user6', 'email': 'user6@example.com'},
+        {'username': 'user7', 'email': 'user7@example.com'},
+    ]
     
-    user1.save()
     
-    # Método 2
-    user2 = User()
-    user2.username = 'user2'
-    user2.email = 'user2@example.com'
-    user2.save()
-    
-    # Método 3
-    
-    values = {
-        'username': 'user3',
-        'email': 'user3@example.com'
-    }
-    
-    user3 = User(**values)
-    user3.save()
-    
-    user4 = User.create(username='user4', email='user4@example.com')
-    print(user4.id)
-    
-    query = User.insert(username='user5', email='user5@example.com')
-    print(query)
-    print(type(query)) # Es del tipo Model Insert
+    query = User.insert_many(users)
     query.execute()
     
     
+    # SELECT * FROM users;
+    users = User.select() # Es del tipo MODEL SELECT
+
+    #print(users)
+    
+    for user in users:
+        print(user.email)
+    
+    # SELECT username, email FROM users;    
+    users = User.select(User.username, User.email)    
+    
+    for user in users:
+        print(user.created_at)
