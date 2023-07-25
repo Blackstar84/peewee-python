@@ -27,13 +27,13 @@ if __name__ == '__main__':
     User.create_table()
     
     users = [
-        {'username': 'user1', 'email': 'user1@example.com'},
+        {'username': 'user1', 'email': 'user1@example.com', 'active': True},
         {'username': 'user2', 'email': 'user2@example.com'},
-        {'username': 'user3', 'email': 'user3@example.com'},
+        {'username': 'user3', 'email': 'user3@example.com', 'active': True},
         {'username': 'user4', 'email': 'user4@example.com'},
         {'username': 'user5', 'email': 'user5@example.com'},
-        {'username': 'user6', 'email': 'user6@example.com'},
-        {'username': 'user7', 'email': 'user7@example.com'},
+        {'username': 'user6', 'email': 'user6@example.com', 'active': True},
+        {'username': 'user7', 'email': 'user7@example.com', 'active': True},
     ]
     
     
@@ -46,11 +46,28 @@ if __name__ == '__main__':
 
     #print(users)
     
-    for user in users:
-        print(user.email)
+    """ for user in users:
+        print(user.email) """
     
-    # SELECT username, email FROM users;    
-    users = User.select(User.username, User.email)    
+    # SELECT username, email, active FROM users WHERE active = 1;    
+    users = User.select(User.username, User.email, User.active).where(
+        (User.active == True) & (User.id > 3)
+        )    
+    
+    """ for user in users:
+        print(user)
+     """    
+        
+   # SELECT username, email, active FROM users WHERE active = 1 and (id=1 or id=7);    
+    users = User.select(User.username,
+                        User.email, 
+                        User.active
+    ).where(
+        (User.active == True) &
+        (
+            (User.id ==1 ) | (User.id == 7)
+        )
+    )    
     
     for user in users:
-        print(user.created_at)
+        print(user)     
