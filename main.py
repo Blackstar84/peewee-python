@@ -40,34 +40,14 @@ if __name__ == '__main__':
     query = User.insert_many(users)
     query.execute()
     
+    # ORDER BY
+    users = User.select().where(
+        User.active == True
+    ).order_by(User.username.desc()).limit(2)
     
-    # SELECT * FROM users;
-    users = User.select() # Es del tipo MODEL SELECT
-
-    #print(users)
-    
-    """ for user in users:
-        print(user.email) """
-    
-    # SELECT username, email, active FROM users WHERE active = 1;    
-    users = User.select(User.username, User.email, User.active).where(
-        (User.active == True) & (User.id > 3)
-        )    
-    
-    """ for user in users:
-        print(user)
-     """    
-        
-   # SELECT username, email, active FROM users WHERE active = 1 and (id=1 or id=7);    
-    users = User.select(User.username,
-                        User.email, 
-                        User.active
-    ).where(
-        (User.active == True) &
-        (
-            (User.id ==1 ) | (User.id == 7)
-        )
-    )    
+    print(users)
     
     for user in users:
-        print(user)     
+        print(user)
+        
+        
