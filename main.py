@@ -41,13 +41,27 @@ if __name__ == '__main__':
     query.execute()
     
     # ORDER BY
-    users = User.select().where(
-        User.active == True
-    ).order_by(User.username.desc()).limit(2)
+    # users = User.select().where(
+    #     User.active == True
+    # ).order_by(User.username.desc()).limit(2)
     
-    print(users)
+    # print(users)
     
-    for user in users:
+    # for user in users:
+    #     print(user)
+        
+    user = User.select().where(User.username == 'user1').first()
+    print(type(user))
+    print(user)
+    
+    try:
+        user = User.select().where(User.username == 'user11').get()
+    except User.DoesNotExist as err:
+        print('No fue posible encontrar el usuario!')
+        
+    user = User.select().where(User.username == 'user11').first()
+    
+    if user:
         print(user)
-        
-        
+    else:
+        print('No fue posible encontrar el usuario!')        
