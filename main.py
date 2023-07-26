@@ -50,18 +50,34 @@ if __name__ == '__main__':
     # for user in users:
     #     print(user)
         
-    user = User.select().where(User.username == 'user1').first()
-    print(type(user))
-    print(user)
+    # user = User.select().where(User.username == 'user1').first()
+    # print(type(user))
+    # print(user)
     
-    try:
-        user = User.select().where(User.username == 'user11').get()
-    except User.DoesNotExist as err:
-        print('No fue posible encontrar el usuario!')
+    # try:
+    #     user = User.select().where(User.username == 'user11').get()
+    # except User.DoesNotExist as err:
+    #     print('No fue posible encontrar el usuario!')
         
-    user = User.select().where(User.username == 'user11').first()
+    # user = User.select().where(User.username == 'user11').first()
     
-    if user:
-        print(user)
+    # if user:
+    #     print(user)
+    # else:
+    #     print('No fue posible encontrar el usuario!')        
+    
+    count = User.select().where(User.username == 'user11').count()
+    print(count)
+    
+    if count > 0:
+        print('El usuario existe en la tabla')
     else:
-        print('No fue posible encontrar el usuario!')        
+        print('No fue posible obtener el usuario')
+        
+    existe = User.select().where(User.username == 'user11').exists()
+    print(existe)
+    
+    if existe:
+        print('El usuario existe en la tabla')
+    else:
+        print('No fue posible obtener el usuario')
