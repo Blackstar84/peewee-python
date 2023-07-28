@@ -64,20 +64,56 @@ if __name__ == '__main__':
     # if user:
     #     print(user)
     # else:
-    #     print('No fue posible encontrar el usuario!')        
+    #     print('No fue posible encontrar el usuario!')       
     
-    count = User.select().where(User.username == 'user11').count()
-    print(count)
+     
     
-    if count > 0:
-        print('El usuario existe en la tabla')
-    else:
-        print('No fue posible obtener el usuario')
+    # Validar existencia de Registros
+    # count = User.select().where(User.username == 'user11').count()
+    # print(count)
+    
+    # if count > 0:
+    #     print('El usuario existe en la tabla')
+    # else:
+    #     print('No fue posible obtener el usuario')
         
-    existe = User.select().where(User.username == 'user11').exists()
-    print(existe)
+    # existe = User.select().where(User.username == 'user11').exists()
+    # print(existe)
     
-    if existe:
-        print('El usuario existe en la tabla')
-    else:
-        print('No fue posible obtener el usuario')
+    # if existe:
+    #     print('El usuario existe en la tabla')
+    # else:
+    #     print('No fue posible obtener el usuario')
+    
+    # Actualizar Registros
+    
+    user = User.select().where(User.id == 1).get()
+    # print(user)
+    
+    # # Primera Forma
+
+    # user.username = 'Nuevo username'
+    # user.email = 'nuevo_emai@example.com'
+    
+    # user.save()
+    
+    
+    # # Segunda Forma
+    
+    # query = User.update(username='User2 nuevo valor', email= 'user2_nuevovalorexample.com').where(User.id == 2)
+    # print(type(query))
+    # query.execute()
+    # print(type(query))
+    
+    user = User.select().where(User.username == 'user7').get()
+    
+    # Primera forma de eliminar
+    
+    user.delete_instance()
+    
+    
+    
+    
+    
+    
+    
