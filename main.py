@@ -56,14 +56,24 @@ if __name__ == '__main__':
     
     ProductCategory.create(product=tv, category=home)
     
-    
+    # N+1 Query -> se soluciona con JOINS en vez de utilizar el siguiente código
     # for product in Product.select(): # 1
         
     #     for product_category in product.categories: # 2
             
     #         print(product, '-', product_category.category) # 3 
 
-    
+
+    for product in Product.select(
+        Product.title, Category.title    
+    ).join(
+        ProductCategory
+    ).join(Category, 
+        on=(
+        ProductCategory.category_id == Category.id
+    )):
+        print(product, '-', product.productcategory.category.title)
+        
     
     
     
