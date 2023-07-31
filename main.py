@@ -3,45 +3,67 @@ from datetime import datetime
 
 database = peewee.MySQLDatabase(database='pythondb', host='localhost', port=3306, user='root', passwd='root')
 
-class User(peewee.Model):
-    username = peewee.CharField(max_length=50)
-    email = peewee.CharField(max_length=50)
+class Product(peewee.Model):
+    title = peewee.CharField(max_length=50)
+    price = peewee.DecimalField(max_digits=10, decimal_places=2)
     
     class Meta:
         database = database
-        db_table = 'users'
+        db_table = 'products'
         
     def __str__(self) -> str:
-        return self.username    
-    @property
-    def admin(self):
-        return self.admins.first()
-    
-class Admin(peewee.Model):
-    permission_level = peewee.IntegerField(default=1)
-    user = peewee.ForeignKeyField(User, backref='admins', unique=True)
+        return self.title    
+
+class Category(peewee.Model):
+    title = peewee.CharField(max_length=20)
     
     class Meta:
         database = database
-        db_table = 'admins'
-
+        db_table = 'categories'
+        
     def __str__(self) -> str:
-        return 'Admin ' + str(self.id)
+        return self.title 
+    
+    
+class ProductCategory(peewee.Model):
+    product = peewee.ForeignKeyField(Product, backref='categories')
+    category = peewee.ForeignKeyField(Category, backref='products')   
+    
+    class Meta:
+        database = database
+        db_table = 'product_categories'
+    
 
             
 if __name__ == '__main__':
     
-    database.drop_tables([User, Admin])
-    database.create_tables([User, Admin])
+    database.drop_tables([Product, Category, ProductCategory])
+    database.create_tables([Product, Category, ProductCategory])
     
-    user1 = User.create(username='User1', email='user1@example.com')
-    admin1 = Admin.create(permission_level=10, user=user1)
+    ipad = Product.create(title='Ipad', price=500.50)
+    iphone = Product.create(title='Iphone', price=800)
+    tv = Product.create(title='Tv', price=600)
     
-    # print(admin1.user.username)
-    # print(admin1.user.email)
+    technology = Category.create(title='Technology')
+    home = Category.create(title='Home')
     
-    # print(user1.admins.first())
-    # print(user1.admin())
-    print(user1.admin)
+    ProductCategory.create(product=ipad, category=technology)
+    ProductCategory.create(product=iphone, category=technology)
+    ProductCategory.create(product=tv, category=technology)
     
-    admin2 = Admin.create(permission_level=5, user=user1)
+    ProductCategory.create(product=tv, category=home)
+    
+    
+    for product_category in technology.products:
+        # print(type(product))
+        print(product_category.product)
+    
+    for product_category in tv.categories:
+        print(product_category.category)
+    
+    
+    
+    
+    
+    
+    
