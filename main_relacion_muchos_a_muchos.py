@@ -3,7 +3,6 @@ from datetime import datetime
 
 database = peewee.MySQLDatabase(database='pythondb', host='localhost', port=3306, user='root', passwd='root')
 
-
 class Product(peewee.Model):
     title = peewee.CharField(max_length=50)
     price = peewee.DecimalField(max_digits=10, decimal_places=2)
@@ -33,9 +32,7 @@ class ProductCategory(peewee.Model):
     class Meta:
         database = database
         db_table = 'product_categories'
-        
-        
-        
+    
 
             
 if __name__ == '__main__':
@@ -57,12 +54,12 @@ if __name__ == '__main__':
     ProductCategory.create(product=tv, category=home)
     
     
-    # for product in Product.select(): # 1
-        
-    #     for product_category in product.categories: # 2
-            
-    #         print(product, '-', product_category.category) # 3 
-
+    for product_category in technology.products:
+        # print(type(product))
+        print(product_category.product)
+    
+    for product_category in tv.categories:
+        print(product_category.category)
     
     
     
